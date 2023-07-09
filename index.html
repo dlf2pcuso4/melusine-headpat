@@ -38,6 +38,8 @@
   <script>
     const hand = document.getElementById("hand");
     const mel = document.getElementById("mel");
+    let canspeak = true;
+    let audio = new Audio(`0.ogg`);
     document.onmousemove = function (e) {
       hand.style.left = `${e.pageX - hand.clientWidth / 2}px`;
       hand.style.top = `${e.pageY - hand.clientHeight / 2}px`;
@@ -58,6 +60,7 @@
       ) {
         mel.src = "mel2.png";
         mel.style.paddingTop = "2px";
+        speak();
       } else {
         mel.src = "mel1.png";
         mel.style.paddingTop = "0px";
@@ -71,6 +74,15 @@
     document.onmouseup = function (e) {
       hand.style.display = "none";
       mel.src = "mel1.png";
+      canspeak = true;
     };
+    function speak() {
+      if (canspeak) {
+        canspeak = false;
+        audio.pause();
+        audio = new Audio(`${Math.floor(Math.random() * 6)}.ogg`);
+        audio.play();
+      }
+    }
   </script>
 </html>
