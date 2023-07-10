@@ -76,6 +76,9 @@
       mel.src = "mel1.png";
       canspeak = true;
     };
+    document.touchstart = document.onmousedown;
+    document.touchmove = document.onmousemove;
+    document.touchend = document.onmouseup;
     function speak() {
       if (canspeak) {
         canspeak = false;
