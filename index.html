@@ -40,7 +40,7 @@
     const mel = document.getElementById("mel");
     let canspeak = true;
     let audio = new Audio(`0.ogg`);
-    document.onmousemove = function (e) {
+    function move(e) {
       hand.style.left = `${e.pageX - hand.clientWidth / 2}px`;
       hand.style.top = `${e.pageY - hand.clientHeight / 2}px`;
       if (
@@ -65,20 +65,32 @@
         mel.src = "mel1.png";
         mel.style.paddingTop = "0px";
       }
-    };
-    document.onmousedown = function (e) {
+    }
+    function down(e) {
       hand.style.display = "block";
       hand.style.left = `${e.pageX - hand.clientWidth / 2}px`;
       hand.style.top = `${e.pageY - hand.clientHeight / 2}px`;
-    };
-    document.onmouseup = function (e) {
+    }
+    function up(e) {
       hand.style.display = "none";
       mel.src = "mel1.png";
       canspeak = true;
+    }
+    document.onmouseup = (e) => up(e);
+    document.onmousemove = (e) => move(e);
+    document.onmousedown = (e) => down(e);
+    document.touchstart = (e) => {
+      e.preventDefault();
+      up(e);
     };
-    document.touchstart = document.onmousedown;
-    document.touchmove = document.onmousemove;
-    document.touchend = document.onmouseup;
+    document.touchmove = (e) => {
+      e.preventDefault();
+      move(e);
+    };
+    document.touchend = (e) => {
+      e.preventDefault();
+      down(e);
+    };
     function speak() {
       if (canspeak) {
         canspeak = false;
